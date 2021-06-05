@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.admicro</groupId>
+  <artifactId>spark-landing-source</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <properties>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
+    <scala.version>2.11.12</scala.version>
+    <scala.version.binary>2.11</scala.version.binary>
+    <spark.version>2.4.3</spark.version>
+  </properties>
+
+  <dependencies>
+
+    <!-- Scala -->
+    <!-- https://mvnrepository.com/artifact/org.scala-lang/scala-library -->
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.scala-tools/maven-scala-plugin -->
+    <dependency>
+      <groupId>org.scala-tools</groupId>
+      <artifactId>maven-scala-plugin</artifactId>
+      <version>${scala.version.binary}</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/junit/junit -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.23</version>
+    </dependency>
+
+    <!-- Spark -->
+
+    <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql_2.11 -->
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-sql_${scala.version.binary}</artifactId>
+      <version>${spark.version}</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-core_2.11 -->
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-core_${scala.version.binary}</artifactId>
+      <version>${spark.version}</version>
+    </dependency>
+
+    <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.spark/spark-streaming_2.11 &ndash;&gt;-->
+    <!--        <dependency>-->
+    <!--            <groupId>org.apache.spark</groupId>-->
+    <!--            <artifactId>spark-streaming_${scala.version.binary}</artifactId>-->
+    <!--            <version>${spark.version}</version>-->
+    <!--        </dependency>-->
+
+    <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.spark/spark-streaming-kafka-0-10 &ndash;&gt;-->
+    <!--        <dependency>-->
+    <!--            <groupId>org.apache.spark</groupId>-->
+    <!--            <artifactId>spark-streaming-kafka-0-10_${scala.version.binary}</artifactId>-->
+    <!--            <version>${spark.version}</version>-->
+    <!--        </dependency>-->
+
+<!--    &lt;!&ndash; Database &ndash;&gt;-->
+<!--    &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.phoenix/phoenix-spark &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>org.apache.phoenix</groupId>-->
+<!--      <artifactId>phoenix-spark</artifactId>-->
+<!--      <version>4.13.1-HBase-1.3</version>-->
+<!--    </dependency>-->
+
+    <!--        <dependency>-->
+    <!--            <groupId>mysql</groupId>-->
+    <!--            <artifactId>mysql-connector-java</artifactId>-->
+    <!--            <version>5.1.34</version>-->
+    <!--        </dependency>-->
+
+    <!-- Configuration Libraries -->
+    <!-- https://github.com/lightbend/config - đùng dể load external config (vd: config.properties)-->
+    <dependency>
+      <groupId>com.typesafe</groupId>
+      <artifactId>config</artifactId>
+      <version>1.2.1</version>
+    </dependency>
+
+    <!-- Other Libraries -->
+    <!-- https://mvnrepository.com/artifact/org.json/json -->
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20180813</version>
+    </dependency>
+
+
+  </dependencies>
+
+  <build>
+    <sourceDirectory>src/main/scala</sourceDirectory>
+    <testSourceDirectory>src/test/scala</testSourceDirectory>
+    <plugins>
+      <plugin>
+        <groupId>org.scala-tools</groupId>
+        <artifactId>maven-scala-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <scalaVersion>${scala.version}</scalaVersion>
+          <args>
+            <arg>-target:jvm-1.5</arg>
+          </args>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <configuration>
+          <downloadSources>true</downloadSources>
+          <buildcommands>
+            <buildcommand>ch.epfl.lamp.sdt.core.scalabuilder</buildcommand>
+          </buildcommands>
+          <additionalProjectnatures>
+            <projectnature>ch.epfl.lamp.sdt.core.scalanature</projectnature>
+          </additionalProjectnatures>
+          <classpathContainers>
+            <classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER</classpathContainer>
+            <classpathContainer>ch.epfl.lamp.sdt.launching.SCALA_CONTAINER</classpathContainer>
+          </classpathContainers>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.4</version>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/libs</outputDirectory>
+              <excludeGroupIds>org.apache.spark</excludeGroupIds>
+              <excludeGroupIds>org.scala-lang</excludeGroupIds>
+              <excludeGroupIds>org.scala-tools</excludeGroupIds>
+              <excludeGroupIds>org.apache.hadoop</excludeGroupIds>
+              <excludeGroupIds>org.spark-project</excludeGroupIds>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!--      <plugin>-->
+      <!--        <artifactId>maven-jar-plugin</artifactId>-->
+      <!--        <version>2.3.2</version>-->
+      <!--        <configuration>-->
+      <!--          <archive>-->
+      <!--            <manifest>-->
+      <!--              <mainClass>vn.vccorp.adtech.analytic.Main</mainClass>-->
+      <!--              &lt;!&ndash;<addClasspath>true</addClasspath>&ndash;&gt;-->
+      <!--              &lt;!&ndash;<classpathLayoutType>custom</classpathLayoutType>&ndash;&gt;-->
+      <!--              &lt;!&ndash;<customClasspathLayout>lib/$${artifactId}-$${version}$${dashClassifier?}.$${artifact.extension}&ndash;&gt;-->
+      <!--              &lt;!&ndash;</customClasspathLayout>&ndash;&gt;-->
+      <!--            </manifest>-->
+      <!--          </archive>-->
+      <!--        </configuration>-->
+      <!--      </plugin>-->
+    </plugins>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <versionRange>[2.0,)</versionRange>
+                    <goals>
+                      <goal>copy-dependencies</goal>
+                    </goals>
+                    <!--                                        <configuration>-->
+                    <!--                                            <outputDirectory>${project.build.directory}/libs</outputDirectory>-->
+                    <!--                                            <excludeGroupIds>org.apache.spark</excludeGroupIds>-->
+                    <!--                                        </configuration>-->
+                  </pluginExecutionFilter>
+                  <action>
+                    <execute/>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.scala-tools</groupId>
+        <artifactId>maven-scala-plugin</artifactId>
+        <configuration>
+          <scalaVersion>${scala.version}</scalaVersion>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
+</project>
